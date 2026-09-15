@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 96" role="img" aria-label="Guindaste STS">
+  <g stroke="#061b31" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M20 3h8l2 21H18z" fill="#61b9ff" stroke-width="2"/>
+    <path d="M21 24L13 66H35L27 24z" fill="#0a6fd5" stroke-width="2"/>
+    <path d="M20 29h8M19 39h10M17 49h14M15 59h18M21 25L15 65M27 25l6 40" fill="none" stroke="#b3e6ff" stroke-width="1.2"/>
+    <path d="M18 44H9M30 44h9M9 44v31M39 44v31" fill="none" stroke-width="2"/>
+    <path d="M14 65h20l4 20H10z" fill="#0780f0" stroke-width="2"/>
+    <path d="M17 69h14v13H17z" fill="#a9dbff" stroke-width="2"/>
+    <path d="M13 85h22M12 85l-2 7M36 85l2 7M8 92h8M32 92h8" fill="none" stroke-width="2.4"/>
+    <path d="M8 93h32" fill="none" stroke="#0065cb" stroke-width="3"/>
+    <path d="M20 3h8" fill="none" stroke="#fff" stroke-width="1"/>
+  </g>
+</svg>

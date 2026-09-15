@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 72" role="img" aria-label="Guindaste móvel MHC">
+  <g stroke="#17202a" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M22 3h5l2 9h-9z" fill="#bdc3c8" stroke-width="1.5"/>
+    <path d="M22 12L18 43h14l-5-31z" fill="#59626b" stroke-width="1.8"/>
+    <path d="M20 19h9M19 27h11M18 35h13M22 13l9 29M27 13l-9 29" fill="none" stroke="#d5dade" stroke-width="1"/>
+    <path d="M20 16L11 31M28 16l9 15M11 31v13M37 31v13" fill="none" stroke-width="1.5"/>
+    <path d="M16 43h18l4 16H12z" fill="#4d5660" stroke-width="1.8"/>
+    <path d="M16 48h17M14 54h21M18 44l17 15M31 44L13 59" fill="none" stroke="#c0c6cb" stroke-width="1"/>
+    <path d="M11 59h28v7H11z" fill="#707981" stroke-width="1.8"/>
+    <path d="M8 66h32v3H8z" fill="#3e474f" stroke-width="1.5"/>
+    <circle cx="14" cy="69" r="2" fill="#252e36"/><circle cx="34" cy="69" r="2" fill="#252e36"/>
+  </g>
+</svg>
