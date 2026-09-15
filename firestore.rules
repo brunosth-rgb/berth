@@ -1,0 +1,47 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function member() {
+      return request.auth != null && request.auth.uid in get(/databases/$(database)/documents/metadata/access).data.uids;
+    }
+    function stamp() {
+      return request.resource.data.updatedBy == request.auth.uid && request.resource.data.updatedAt == request.time;
+    }
+    function versionCreate() { return request.resource.data.revision == 1; }
+    function versionUpdate() { return request.resource.data.revision == resource.data.revision + 1; }
+    match /vessels/{id} {
+      function valid() {
+        let d=request.resource.data;
+        return d.keys().hasOnly(['name','loa','beam','revision','updatedAt','updatedBy']) && d.name is string && d.name.size()>0 && d.name.size()<=150 && d.loa is number && d.loa>0 && d.beam is number && d.beam>0 && stamp();
+      }
+      allow read, delete: if member();
+      allow create: if member() && valid() && versionCreate();
+      allow update: if member() && valid() && versionUpdate();
+    }
+    match /settings/global {
+      function valid() {
+        let d=request.resource.data;
+        return d.keys().hasOnly(['total','minGap','bollards','fenders','cranes','berths','berthsValidated','revision','updatedAt','updatedBy']) && d.total is number && d.total>0 && d.minGap is number && d.minGap>=0 && d.bollards is list && d.fenders is list && d.cranes is list && d.cranes.size()==6 && d.berths is list && (d.berths.size()==0 || d.berths.size()==4) && d.berthsValidated is bool && stamp();
+      }
+      allow read: if member();
+      allow create: if member() && valid() && versionCreate();
+      allow update: if member() && valid() && versionUpdate();
+    }
+    match /sketches/{id} {
+      function valid() {
+        let d=request.resource.data;
+        return d.keys().hasOnly(['schemaVersion','date','reference','globalDir','obsTop','notes','ships','settings','revision','updatedAt','updatedBy']) && d.schemaVersion==1 && d.reference is string && d.reference.size()>0 && d.date is string && d.globalDir is string && d.obsTop is string && d.notes is string && d.ships is list && d.settings is map && stamp();
+      }
+      allow read, delete: if member();
+      allow create: if member() && valid() && versionCreate();
+      allow update: if member() && valid() && versionUpdate();
+    }
+    match /metadata/app {
+      allow read: if member();
+      allow create, update: if member() && request.resource.data.keys().hasOnly(['schemaVersion','updatedAt','updatedBy']) && request.resource.data.schemaVersion==1 && stamp();
+    }
+    // Somente o administrador, pelo console Firebase, modifica a lista de acesso.
+    match /metadata/access { allow read, write: if false; }
+    match /{document=**} { allow read, write: if false; }
+  }
+}
