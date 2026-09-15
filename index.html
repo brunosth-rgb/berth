@@ -351,6 +351,16 @@ updateAccess();
 (()=>{
  const recipients=['operacao@portoitajai.com.br','gabrielgatti@praticoszp21.com.br','eliane@portoitajai.com.br','PROGRAMACAO@PORTOITAJAI.COM.BR','patricia@itajaipraticos.com.br','controle@praticoszp21.com.br','geope@portoitajai.com.br','roberto.rodi@jbsterminais.com.br','coordenacao@jbsterminais.com.br','supervisao@jbsterminais.com.br','operacoes@jbsterminais.com.br','fabio.cordeiro@jbsterminais.com.br','rafael.razzera@jbsterminais.com.br','planejamento@jbsterminais.com.br','julio.hellmann@jbsterminais.com.br','carlos.ferreira1@jbsterminais.com.br','bruno.duarte1@jbsterminais.com.br','evandro.souza@jbsterminais.com.br','felipe.brasil@jbsterminais.com.br'];
  const body='Boa tarde SPI / Time Praticagem,\r\n\r\nGentileza notar anexo croqui com cenário de atracação atualizado para os navios em referencia.';
+ // Assunto: maior interseção longitudinal; empate mantém o primeiro berço na ordem do cais.
+ function emailBerth(ship){
+  const [start,end]=ends(ship);let best=null,largest=0;
+  for(const berth of berths){
+   const berthStart=berth.start===0?MIN_POSITION:berth.start;
+   const overlap=Math.max(0,Math.min(end,berth.end)-Math.max(start,berthStart));
+   if(overlap>largest){largest=overlap;best=berth;}
+  }
+  return best?best.name:'A validar';
+ }
  const button=document.getElementById('sendSketchBtn');let generating=false,loader=null,urls=[];
  const base64=bytes=>{let s='';for(let i=0;i<bytes.length;i+=8192)s+=String.fromCharCode(...bytes.subarray(i,i+8192));return btoa(s)};
  const utf64=s=>base64(new TextEncoder().encode(s));
@@ -377,7 +387,7 @@ updateAccess();
  button.addEventListener('click',async()=>{
   if(!editable||generating)return;if(!ships.length){message('Adicione um navio ao croqui antes de preparar o e-mail.');return}
   generating=true;button.disabled=true;button.textContent='Preparando…';
-  const subject='CROQUI DE ATRAÇÃO [ '+ships.map(s=>s.name+' - '+berthName(s)).join(' / ')+' ]';
+  const subject='CROQUI DE ATRAÇÃO [ '+ships.map(s=>s.name+' - '+emailBerth(s)).join(' / ')+' ]';
   const filename='croqui-atracacao-'+(document.getElementById('date').value||'atual')+'.pdf';
   const aspect=svg.getAttribute('preserveAspectRatio');let html,css;
   try{
