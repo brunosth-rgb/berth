@@ -42,6 +42,11 @@ service cloud.firestore {
     }
     // Somente o administrador, pelo console Firebase, modifica a lista de acesso.
     match /metadata/access { allow read, write: if false; }
+    // Exceção pública limitada ao croqui operacional selecionado.
+    match /public/currentSketch {
+      allow read: if true;
+      allow write: if member();
+    }
     match /{document=**} { allow read, write: if false; }
   }
 }
